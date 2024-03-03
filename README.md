@@ -171,7 +171,7 @@ fn main() {
 }
 ```
 
-## Compound Types
+### Compound Types
 
 Compound types are types that can group multiple values into one type. These include tuples and arrays.
 
@@ -219,7 +219,7 @@ Arrays have a fixed length.
 
 ```rust
 fn main() {
-    let array = [1, 2, 3, 4, 5]
+    let array = [1, 2, 3, 4, 5];
 }
 ```
 
@@ -230,13 +230,13 @@ Arrays are not as flexible as vectors, that can change in size.
 Arrays are useful if you know that the size will not change.
 
 ```rust
-let nums_1_10: [i32, 10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+let nums_1_10: [i32, 10] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 ```
 
 Arrays can be created to contain the same value, a certain number of times with the following syntax:
 
 ```rust
-let 4 = [4; 4] // will create an array with four fours
+let 4 = [4; 4]; // will create an array with four fours
 ```
 
 Array values can be accessed similar to JavaScript, using the variable name followed by the index in square brackets.
@@ -244,3 +244,106 @@ Array values can be accessed similar to JavaScript, using the variable name foll
 If a user tries to access a value that does not exist inside an array, the program will exit with the following error message:
 
 ```index out of bounds: the len is (len) but the index is (index)```
+
+## Functions
+
+Rust functions are declared using `fn`.
+
+Rust uses snake case styling for function and variable names.
+
+The main function is most commonly the entry point for most Rust programs.
+
+Functions other than the main function can be defined either before or after the main function, it does not matter.
+
+### Parameters
+
+Parameters, or arguments, are values that are passed into a function to be used inside the function.
+
+Function parameters require their type to always be declared. Multiple parameters are to be separated by commas.
+
+```rust
+fn example_function(num: i32, letter: char) {
+    println!("Num is {num}, letter is {letter}.")
+}
+```
+
+It could be called like this:
+
+```rust
+fn main() {
+    example_function(24, 'Z');
+}
+```
+
+### Statements and Expressions
+
+Per the Rust docs:
+
+- Statements are instructions that perform some action and do not return a value.
+
+- Expressions evaluate to a resultant value.
+
+Creating a variable and giving it a value, with the let keyword, is a statement.
+
+E.g.
+
+Statement
+
+```rust
+let val = String::from("pig");
+```
+
+Function definitions are also statements.
+
+Statements do not return values.
+
+Expressions evaluate to a value.
+
+- Math operations are expressions, e.g. ```3+4```.
+
+- Calling a function is an expression.
+
+- Calling a macro is an expression.
+
+- Scope blocks, created with curly brackets, are expressions.
+
+E.g.
+
+```rust
+let sum = {
+    let num = 72;
+    num + 7
+}
+```
+
+Expressions do not have a semi colon at the end. Adding one turns it into a statement.
+
+### Functions with Return Values
+
+Functions can return values. These values are not named, but their types must be declared using arrows. `(->)`
+
+In Rust, it is possible to return early in a function by using the `return` keyword. Most functions will return the last expression, implicitly.
+
+E.g.
+
+```rust
+fn seven() -> i32 {
+    7
+}
+
+fn main() {
+    let val = seven();  // val is now equal to the expression inside the seven function, 7
+}
+```
+
+E.g.
+
+```rust
+fn main() {
+    let val = plus_one(8);
+}
+
+fn plus_one(num: i32) -> i32 {
+    num + 1
+}
+```
