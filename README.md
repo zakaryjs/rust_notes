@@ -347,3 +347,165 @@ fn plus_one(num: i32) -> i32 {
     num + 1
 }
 ```
+
+## Control Flow
+
+Control flow is the ability to determine the flow of a program depending on a set of conditions. Loops and if expressions are most commonly used for this purpose.
+
+### If Expressions
+
+If expressions allow for certain parts of code to run depending on the condition. 
+
+E.g.
+
+```rust
+fn main() {
+    let number = 3;
+
+    if number < 5 {
+        println!("condition was true");
+    } else {
+        println!("condition was false");
+    }
+}
+```
+
+Unlike JavaScript, values cannot be automatically converted to a boolean. As such, code like the following will throw an error:
+
+```rust
+fn main() {
+    let number = 3;
+
+    if number {
+        println!("number was three");
+    }
+} // error mismatched types. expected bool, found integer
+```
+
+The does not equal symbol, or `!=` is also supported.
+
+Multiple `if else` statements are also supported.
+
+### Using If in a Let Statement
+
+If can be used to assign the outcome of a certain condition to a variable.
+
+E.g. 
+
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 } // number will = 5
+}
+```
+
+However, both the if and else statements must have the same resulting type, or an error will be thrown.
+
+E.g.
+
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { "six" } // expected integer, found &str
+}
+```
+
+### Repetition with Loops
+
+Loops also function similarly to JavaScript.
+
+The `loop` keyword will execute a block over and over again until it is told to stop!
+
+E.g.
+
+```rust
+loop {
+    println!("hello world!") // will print hello world indefinitely until Ctrl + C
+}
+```
+
+The `break` and `continue` keywords can also be used to either break out of a loop, or skip an interation of a loop, respectively.
+
+### Returning Values from Loops
+
+```rust
+fn main() {
+    let mut number = 0; // assign number value 0
+
+    let result = loop { // assign result value to loop
+        number += 1; // adds 1 to the number variable 
+
+        if number == 10 {
+            break number * 2; // if the number variable is = 10, break the loop, multiple the number variable by 2, and return the value
+        }
+    };
+}
+```
+
+### Loop labels
+
+Loop labels can be assigned by:
+
+```rust
+ 'loop_name loop {
+    `insert loop here`
+ }
+```
+
+### While Loops
+
+While loops are also similar to JavaScript.
+
+E.g. 
+
+```rust
+fn main() {
+
+    let number = 5;
+    
+    while number != 0 {
+        println!("{number}!");
+
+        number -= 1;
+    }
+
+    println!("Liftoff!!!")
+
+}
+```
+
+### For Loops
+
+For loops are also similar to JavaScript.
+
+E.g.
+
+```rust
+fn main() {
+    let pokemon = ['oshawott', 'snivy', 'tepig'];
+
+    for pokeman in pokemon {
+        println!("Go {pokeman}!")
+    }
+}
+```
+
+Range can be used in for loops that use numbers. The `.rev()` method can be used to reverse the order of numbers in a range.
+
+E.g. 
+
+```rust
+fn main() {
+    for number in (1..10).rev() {
+        println!("{number}!")
+    }
+
+    println!("Liftoff!")
+}
+```
+
+To practice:
+
+- Convert temperatures between Fahrenheit and Celsius.
+- Generate the nth Fibonacci number.
+- Print the lyrics to the Christmas carol “The Twelve Days of Christmas,” taking advantage of the repetition in the song.
