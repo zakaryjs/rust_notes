@@ -1,4 +1,4 @@
-# Rust Note Taking
+# Common Concepts
 
 ## Variables and Mutability
 
