@@ -260,3 +260,75 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
 ```
 
 Rust allows for the return of multiple values, using a tuple.
+
+## References and Borrowing
+
+A reference is like a pointer, in the sense that it is an address that can be followed to access the data stored at that address. References are guaranteed to point to a valid value of a particular type.
+
+The following `calculate_length` function uses a reference to an object as a parameter instead of taking ownership of the value.
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+
+The ampersands, or `&` symbols represent references. These allow for the functions to refer to the value without actually taking ownership of it.
+
+![Image representation of references](https://doc.rust-lang.org/book/img/trpl04-05.svg)
+
+In the above example, the `&s1` syntax creates a reference to the value `s1`, but does not own it. Because the function does not own it, the value that the reference points to will not be dropped when the function has completed.
+
+In the `calculate_length` function, the `s` parameter declares the type to be `&String`. This is to say that the s parameter is required to be a reference to a `String.`
+
+The action of creating a reference is known as `borrowing`. Things that are borrowed are not able to be modified.
+
+E.g.
+
+```rust
+fn main() {
+    let s = String::from("hello");
+
+    change(&s);
+}
+
+fn change(some_string: &String) {
+    some_string.push_str(", world") 
+    // cannot borrow `some_string` as mutable, as it is behind a `&` reference
+}
+```
+
+Like variables, that are immutable by default, references are as well.
+
+### Mutable References 
+
+To allow for references to be modified, the `mut` keyword must be added before the type, and after the ampersand, like so: `&mut String`.
+
+You can only have one mutable reference at a time. Any code that has two mutable references to the same value will fail.
+
+The restriction that prevents multiple mutable references at the same time allows for controlled mutation. The restriction prevents data races at compile time. A data race can occur when:
+
+- Two or more pointers access the same data at the same time
+
+- At least one of the pointers is being used to write the data
+
+- There's no mechanism being used to synchronize access to the data
+
+Data races causes behaviour that can be unexpected, and hard to diagnose and fix. Rust does not compile code with data races.
+
+Rust enforces a rule that disallows combining mutable and immutable references. Multiple immutable references are allowed.
+
+A references scope begins from where the reference is introduced, and ends at the last time that it is used.
+
+### Dangling References
+
+Dangling pointers are pointers that reference a location in memory that may have been given to someone else. These do not exist in Rust, as at compile time it is checked to see whether or not the reference should exist.
+
