@@ -332,3 +332,94 @@ A references scope begins from where the reference is introduced, and ends at th
 
 Dangling pointers are pointers that reference a location in memory that may have been given to someone else. These do not exist in Rust, as at compile time it is checked to see whether or not the reference should exist.
 
+## The Slice Type
+
+The slice type allows for a reference to be made to a sequence of elements, in a collection, rather than the whole collection. As slices are references, they do not have ownership.
+
+The following example is based on a function that takes a string of words seperated by spaces as a parameter, abd returns the first word in that string. If a space isn't found, the entire string is returned.
+
+```rust
+fn first_word(s: &String) -> usize {
+
+}
+```
+
+In this function declaration, the function takes in a reference to a string as a parameter, and returns the index of the end of the first word.
+
+The full function looks like this:
+
+```rust
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+```
+
+The first thing that this function does is converts the string to an array of bytes, using the `as_bytes` method. This is to allow for each element of the string to be checked in order to determine whether it is a space or not.
+
+The next thing that this function does, is creates an iterator over the array of bytes, using the `iter` method. This method returns each element in a collection. The `enumerate` method then wraps the result and returns each element as part of a tuple.
+
+The first element that is returned is the index, or `i`, and the second item that is returned is a reference to the element itself.
+
+Then, in the for loop, if the byte, or reference to the element is equal to a space, the index is returned.
+
+If a space is not found, the length of the string is returned.
+
+### String Slices
+
+A string slice is a reference to a part of a String. Slices are used so that the string as a whole does not have to be referenced in order to retrieve a part of a string.
+
+String slices look like:
+
+```rust
+let example_string = String::from("my name is zak");
+
+let my = &example_string[0..3];
+
+let name = &example_string[4..8];
+```
+
+In a slice, a reference to the string that is being sliced is put next to a pair of square brackets, in which the first variable is the starting index, and the second being the ending index. The ending is equal to one more than the ending point of the slice.
+
+Internally, slices are stored with a pointer that points to the starting index of the slice, and the length of the slice.
+
+![Slice in memory](https://doc.rust-lang.org/book/img/trpl04-06.svg)
+
+The first_word function can now be changed to return a slice. The type for string slices is `&str`.
+
+```rust
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, item) in bytes.iter().enumerate() {
+        item == b' ' {
+            return &s[0..i]
+        }
+    }
+
+    &s[..]
+}
+```
+
+### String Literals as Slices
+
+String literals are stored directly inside the binary. The type is `&str` - it is a slice that points directly toward where the string is stored in the binary. String literals are immutable for this reason; `&str` is an immutable reason. 
+
+### Other Slices 
+
+Slices can also be used on other types, such as Integers.
+
+```rust
+
+let array = [0, 1, 2, 3];
+
+let slice = &array[0..2];
+
+assert_eq!(slice, &[0, 1, 2]);
